@@ -7,6 +7,7 @@ import config from "./config.js";
 
 const execAsync = promisify(exec);
 const DATA_FILE = "./data.json";
+const tingting_file = "./assets/tingting.mp3";
 const API_URL = "https://my.sepay.vn/userapi/transactions/list";
 
 const initDataFile = async () => {
@@ -21,7 +22,7 @@ const initDataFile = async () => {
             JSON.stringify({ lastTransactionId }, null, 2)
          );
       } catch (error) {
-         console.error("[ERROR] - Failed to initialize data:", error);
+         console.error("[ERROR] - Không thể khởi tạo dữ liệu:", error);
          fs.writeFileSync(
             DATA_FILE,
             JSON.stringify({ lastTransactionId: null }, null, 2)
@@ -37,7 +38,7 @@ const getLastTransactionId = () => {
          null
       );
    } catch (error) {
-      console.error("[ERROR] - Failed to read data file:", error);
+      console.error("[ERROR] - Không thể đọc tệp dữ liệu:", error);
       return null;
    }
 };
@@ -60,27 +61,27 @@ const fetchTransactions = async () => {
       if (latestTransaction && latestTransaction.id !== lastTransactionId) {
          saveLastTransactionId(latestTransaction.id);
          const amountReceived = Math.floor(latestTransaction.amount_in);
-         console.log(`[NEW TRANSACTION] +${amountReceived} VND`);
+         console.log(`[GIAO DỊCH MỚI] +${amountReceived} VND`);
          await playNotification(amountReceived);
       }
    } catch (error) {
-      console.error("[ERROR] - Failed to fetch transactions:", error);
+      console.error("[ERROR] - Không thể lấy danh sách giao dịch:", error);
    }
 };
 
 const playNotification = async (amount) => {
    try {
       const ttsUrl = googleTTS.getAllAudioUrls(
-         `Giao dịch thành công! Đã nhận ${amount} đồng. Cảm ơn quý khách!`,
+         `Giao dịch thành công! Đã nhận ${amount} đồng!`,
          { lang: "vi" }
       )[0].url;
 
       await execAsync(
-         `ffplay -nodisp -autoexit -loglevel quiet "https://tiengdong.com/wp-content/uploads/Tieng-tinh-tinh-www_tiengdong_com.mp3"`
+         `ffplay -nodisp -autoexit -loglevel quiet "${tingting_file}"`
       );
       await execAsync(`ffplay -nodisp -autoexit -loglevel quiet "${ttsUrl}"`);
    } catch (error) {
-      console.error("[ERROR] - Failed to play notification sound:", error);
+      console.error("[ERROR] - Không thể phát âm thanh thông báo:", error);
    }
 };
 
