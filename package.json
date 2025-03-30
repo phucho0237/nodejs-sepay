@@ -1,0 +1,22 @@
+{
+   "name": "sepay_api",
+   "version": "1.0.0",
+   "description": "",
+   "main": "main.js",
+   "type": "module",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "dependencies": {
+      "axios": "^1.8.4",
+      "dotenv": "^16.4.7",
+      "fs": "^0.0.1-security",
+      "google-tts-api": "^2.0.2",
+      "util": "^0.12.5"
+   },
+   "author": {
+      "name": "Nhu Phuc",
+      "email": "phucho0237@gmail.com"
+   },
+   "license": "MIT"
+}
