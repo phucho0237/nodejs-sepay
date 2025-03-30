@@ -1,6 +1,6 @@
-# SEPay Transaction Tracker
+# SePay Transaction Tracker
 
-SEPay Transaction Tracker là một công cụ theo dõi giao dịch tự động cho tài khoản SePay. Phần mềm này giúp bạn nhận thông báo ngay lập tức khi có giao dịch mới.
+SePay Transaction Tracker là một công cụ theo dõi giao dịch tự động cho tài khoản SePay. Phần mềm này giúp bạn nhận thông báo ngay lập tức khi có giao dịch mới.
 
 ## 🚀 Tính năng
 
@@ -20,7 +20,7 @@ SEPay Transaction Tracker là một công cụ theo dõi giao dịch tự độn
 
 1. Clone repository:
    ```sh
-   git clone https://github.com/phucho0237/nodejs-sepay.git
+   git clone https://github.com/phucho0237/sepay-transaction-tracker.git
    cd nodejs-sepay
    ```
 2. Cài đặt các dependencies:
