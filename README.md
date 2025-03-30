@@ -30,7 +30,7 @@ SEPay Transaction Tracker là một công cụ theo dõi giao dịch tự độn
 3. Cấu hình API Token:
    -  Tạo file `.env` và thêm token SePay của bạn:
       ```js
-      TOKEN = YOURTOKEN;
+      TOKEN=YOURTOKEN
       ```
 
 ## ▶️ Sử dụng
