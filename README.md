@@ -1,10 +1,10 @@
 # SEPay Transaction Tracker
 
-SEPay Transaction Tracker là một công cụ theo dõi giao dịch tự động cho tài khoản SEPay. Phần mềm này giúp bạn nhận thông báo ngay lập tức khi có giao dịch mới.
+SEPay Transaction Tracker là một công cụ theo dõi giao dịch tự động cho tài khoản SePay. Phần mềm này giúp bạn nhận thông báo ngay lập tức khi có giao dịch mới.
 
 ## 🚀 Tính năng
 
--  **Tự động theo dõi giao dịch**: Kiểm tra danh sách giao dịch trên SEPay mỗi 5 giây.
+-  **Tự động theo dõi giao dịch**: Kiểm tra danh sách giao dịch trên SePay mỗi 5 giây.
 -  **Thông báo bằng âm thanh**: Phát tiếng chuông khi có giao dịch mới.
 -  **Đọc số tiền nhận được**: Sử dụng Google TTS để đọc số tiền bằng tiếng Việt.
 -  **Lưu trạng thái giao dịch**: Ghi lại giao dịch cuối cùng vào file `data.json` để tránh thông báo trùng lặp.
@@ -28,7 +28,7 @@ SEPay Transaction Tracker là một công cụ theo dõi giao dịch tự độn
    npm install
    ```
 3. Cấu hình API Token:
-   -  Tạo file `.env` và thêm token của bạn:
+   -  Tạo file `.env` và thêm token SePay của bạn:
       ```js
       TOKEN = YOURTOKEN;
       ```
