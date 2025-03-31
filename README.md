@@ -1,3 +1,5 @@
+# From @phucho0237 w/ help of [ChatGPT](https://chatgpt.com)
+
 # SePay Transaction Tracker
 
 SePay Transaction Tracker là một công cụ theo dõi giao dịch tự động cho tài khoản SePay. Phần mềm này giúp bạn nhận thông báo ngay lập tức khi có giao dịch mới.
