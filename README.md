@@ -51,5 +51,6 @@ Khi có giao dịch mới, chương trình sẽ phát âm thanh và đọc số 
 -  Axios (gửi request API)
 -  Google TTS API (đọc số tiền)
 -  FFmpeg (phát âm thanh thông báo)
+-  Moment (định dạng ngày - giờ)
 
 ## 🆓 Dự án hoàn toàn miễn phí để sử dụng
