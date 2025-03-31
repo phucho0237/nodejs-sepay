@@ -16,6 +16,9 @@ const readDataFile = async () => {
       const content = await fs.readFile(DATA_FILE, "utf8");
       return JSON.parse(content);
    } catch {
+      console.warn(
+         "[WARNING] - Không tìm thấy hoặc không thể đọc tệp dữ liệu. Sử dụng giá trị mặc định."
+      );
       return { lastTransactionId: null };
    }
 };
@@ -24,19 +27,22 @@ const writeDataFile = async (data) => {
    try {
       await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2));
    } catch (error) {
-      console.error("[ERROR] - Không thể ghi file data:", error);
+      console.error("[LỖI] - Ghi dữ liệu không thành công:", error);
    }
 };
 
 const initDataFile = async () => {
    if (!existsSync(DATA_FILE)) {
       try {
+         console.info("[INFO] - Tệp dữ liệu không tồn tại, đang khởi tạo...");
          const { data } = await axios.get(API_URL, {
             headers: { Authorization: `Bearer ${config.apiToken}` },
          });
          const txId = data.transactions[0]?.id || null;
          await writeDataFile({ lastTransactionId: txId });
-      } catch {
+         console.info("[INFO] - Khởi tạo tệp dữ liệu thành công.");
+      } catch (error) {
+         console.error("[LỖI] - Không thể khởi tạo tệp dữ liệu:", error);
          await writeDataFile({ lastTransactionId: null });
       }
    }
@@ -58,14 +64,14 @@ const fetchTransactions = async () => {
       if (latestTxId === String(lastTransactionId)) return;
 
       const amountReceived = Math.floor(parseFloat(latestTx.amount_in));
-      console.log(
-         `[GIAO DỊCH MỚI] +${amountReceived} VND - ID: ${latestTxId} - Ref: ${latestTx.reference_number} - Date: ${latestTx.transaction_date}`
+      console.info(
+         `[THÔNG BÁO] - Giao dịch mới: +${amountReceived} VND | ID: ${latestTxId} | Mã tham chiếu: ${latestTx.reference_number} | Ngày: ${latestTx.transaction_date}`
       );
 
       await playNotification(amountReceived);
       await writeDataFile({ lastTransactionId: latestTxId });
    } catch (error) {
-      console.error("[ERROR] - Không thể lấy danh sách giao dịch:", error);
+      console.error("[LỖI] - Không thể truy xuất giao dịch:", error);
    }
 };
 
@@ -80,7 +86,7 @@ const playNotification = async (amount) => {
       );
       await execAsync(`ffplay -nodisp -autoexit -loglevel quiet "${ttsUrl}"`);
    } catch (error) {
-      console.error("[ERROR] - Không thể phát âm thanh:", error);
+      console.error("[LỖI] - Phát thông báo âm thanh không thành công:", error);
    }
 };
 
