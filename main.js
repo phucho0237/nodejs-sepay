@@ -4,12 +4,19 @@ import { existsSync } from "fs";
 import googleTTS from "google-tts-api";
 import { exec } from "child_process";
 import { promisify } from "util";
+import moment from "moment";
 import config from "./config.js";
 
 const execAsync = promisify(exec);
 const DATA_FILE = "./data.json";
 const NOTI_SOUND = "./assets/tingting.mp3";
 const API_URL = "https://my.sepay.vn/userapi/transactions/list";
+
+const formatDateTime = (datestring) => {
+   return moment(datestring, "YYYY-MM-DD HH:mm:ss").format(
+      "DD/MM/YYYY HH:mm:ss"
+   );
+};
 
 const readDataFile = async () => {
    try {
@@ -64,8 +71,10 @@ const fetchTransactions = async () => {
       if (latestTxId === String(lastTransactionId)) return;
 
       const amountReceived = Math.floor(parseFloat(latestTx.amount_in));
+      const formattedDate = formatDateTime(latestTx.transaction_date);
+
       console.info(
-         `[THÔNG BÁO] - Giao dịch mới: +${amountReceived} VND | ID: ${latestTxId} | Mã tham chiếu: ${latestTx.reference_number} | Ngày: ${latestTx.transaction_date}`
+         `[THÔNG BÁO] - Giao dịch mới: +${amountReceived} VND | ID: ${latestTxId} | Mã tham chiếu: ${latestTx.reference_number} | Thời gian: ${formattedDate}`
       );
 
       await playNotification(amountReceived);
