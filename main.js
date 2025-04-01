@@ -57,28 +57,34 @@ const initDataFile = async () => {
 
 const fetchTransactions = async () => {
    try {
-      const { lastTransactionId } = await readDataFile();
+      const { lastProcessedTransactionId = null } = await readDataFile();
       const { data } = await axios.get(API_URL, {
          headers: { Authorization: `Bearer ${config.apiToken}` },
       });
 
       const latestTx = data.transactions.find(
-         (tx) => parseFloat(tx.amount_in) > 0
+         (tx) =>
+            parseFloat(tx.amount_in) > 0 && tx.sub_account === config.subAccount
       );
+
       if (!latestTx) return;
 
       const latestTxId = String(latestTx.id);
-      if (latestTxId === String(lastTransactionId)) return;
+      if (latestTxId === lastProcessedTransactionId) return;
 
       const amountReceived = Math.floor(parseFloat(latestTx.amount_in));
       const formattedDate = formatDateTime(latestTx.transaction_date);
 
       console.info(
-         `[THÔNG BÁO] - Giao dịch mới: +${amountReceived} VND | ID: ${latestTxId} | Mã tham chiếu: ${latestTx.reference_number} | Thời gian: ${formattedDate}`
+         `\n🔔 [THÔNG BÁO - VA: ${config.subAccount}] 🔔\n` +
+            `Thời gian:      ${formattedDate}\n` +
+            `Số tiền nhận:   +${amountReceived} VND\n` +
+            `Mã tham chiếu:  ${latestTx.reference_number}\n` +
+            `------------------------------------------`
       );
 
       await playNotification(amountReceived);
-      await writeDataFile({ lastTransactionId: latestTxId });
+      await writeDataFile({ lastProcessedTransactionId: latestTxId });
    } catch (error) {
       console.error("[LỖI] - Không thể truy xuất giao dịch:", error);
    }
